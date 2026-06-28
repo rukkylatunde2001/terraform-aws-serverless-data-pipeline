@@ -35,45 +35,13 @@ A fully automated, event-driven data pipeline on AWS — provisioned entirely wi
 
 ---
 
-## Project Structure
-
-
-terraform-aws-serverless-data-pipeline/
-├── provider.tf          # AWS + archive provider configuration
-├── main.tf              # All 13 AWS resources defined as code
-├── lambda_function.py   # Python code for the Lambda function
-└── .gitignore           # Excludes state files and .terraform/ folder
-
-
----
-
-# 2. Initialise Terraform (downloads AWS and archive providers)
-terraform init
-
-# 3. Preview what will be created
-terraform plan
-
-# 4. Build all 13 resources in AWS
-terraform apply
-
-
-### Destroy Everything
-
-bash
-terraform destroy
-
-
-All 13 resources are deleted cleanly. No manual cleanup required.
-
----
-
 ## How It Was Built — Step by Step
 
 ### Step 1 — Configure the AWS Provider
 
 Created provider.tf to declare the AWS and archive providers, locking the AWS provider to version ~> 5.0 and setting the region to us-east-1.
 
-Ran terraform init to download both providers and initialise the working directory.
+Ran 'terraform init' to download both providers and initialise the working directory.
 
 ![Terraform Init Success](screenshots/terraform_init.png)
 
@@ -97,6 +65,7 @@ All 13 resources were written in main.tf, grouped by service:
 
 ### Step 3 — terraform apply
 
+'terraform plan' then,
 After reviewing the plan (13 to add, 0 to change, 0 to destroy), ran terraform apply and confirmed with yes.
 
 ![13 Resources Created](screenshots/resoucres_created.png)
