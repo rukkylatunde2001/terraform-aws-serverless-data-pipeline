@@ -31,7 +31,7 @@ flowchart LR
 
 | Terraform Resource | AWS Service | Purpose |
 |---|---|---|
-| `aws_s3_bucket` (×2) | Amazon S3 | Raw data uploads + Athena query results |
+| aws_s3_bucket (×2) | Amazon S3 | Raw data uploads + Athena query results |
 | `aws_iam_role` (×2) | AWS IAM | Execution roles for Lambda and Glue |
 | `aws_iam_role_policy_attachment` (×4) | AWS IAM | Managed policy attachments |
 | `aws_lambda_function` | AWS Lambda | Triggered by S3, starts the Glue Crawler |
