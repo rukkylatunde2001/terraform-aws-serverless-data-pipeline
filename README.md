@@ -15,16 +15,7 @@ A fully automated, event-driven data pipeline on AWS — provisioned entirely wi
 
 ## Architecture
 
-mermaid
-flowchart LR
-    A[📄 CSV Upload] -->|S3 PUT Event| B[Amazon S3\nRaw Data Bucket]
-    B -->|Triggers| C[AWS Lambda\nStartGlueCrawler]
-    C -->|Starts| D[AWS Glue Crawler]
-    D -->|Writes schema to| E[Glue Data Catalog]
-    E -->|Queryable via| F[Amazon Athena]
-    F -->|Results stored in| G[Amazon S3\nResults Bucket]
-
-
+![Architecture Diagram](screenshots/architecture.png)
 ---
 
 ## What Terraform Provisions
@@ -55,20 +46,6 @@ terraform-aws-serverless-data-pipeline/
 
 
 ---
-
-## How to Use This Project
-
-### Prerequisites
-- [Terraform installed](https://developer.hashicorp.com/terraform/install) (AMD64 for Windows)
-- [AWS CLI installed](https://aws.amazon.com/cli/) and configured (aws configure)
-- An AWS IAM user with AdministratorAccess
-
-### Deploy the Pipeline
-
-bash
-# 1. Clone the repo
-git clone https://github.com/rukkylatunde2001/terraform-aws-serverless-data-pipeline.git
-cd terraform-aws-serverless-data-pipeline
 
 # 2. Initialise Terraform (downloads AWS and archive providers)
 terraform init
@@ -170,7 +147,7 @@ The data is now queryable directly from Amazon Athena with no additional setup.
 
 ---
 
-## Key Lessons — Why IaC Over Console Clicking
+## Why IaC Over Console Clicking
 
 | Console Approach | Terraform Approach |
 |---|---|
@@ -184,27 +161,18 @@ The data is now queryable directly from Amazon Athena with no additional setup.
 
 ## Troubleshooting
 
-**BucketAlreadyExists on apply**
-S3 bucket names are globally unique. Rename the bucket in main.tf to include your name — e.g. rukayat-pipeline-raw-2026.
-
 **Policy does not exist or is not attachable**
-The policy ARN is wrong. For the Lambda Glue attachment use arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess — not AWSGlueServiceRole.
-
-**Machine Type Mismatch when running terraform**
-You downloaded the wrong Terraform binary. Re-download the **AMD64** version from [developer.hashicorp.com/terraform/install](https://developer.hashicorp.com/terraform/install).
+The policy ARN i used initally is wrong. Lambda Glue attachment use arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess — not AWSGlueServiceRole.
 
 **terraform destroy fails with BucketNotEmpty**
-Add force_destroy = true to both aws_s3_bucket resources, run terraform apply, then terraform destroy.
-
-**Glue Crawler creates 0 tables**
-The AmazonS3ReadOnlyAccess policy is missing from the Glue role. Add the aws_iam_role_policy_attachment for it and run terraform apply.
+emptied the bucket then tried again.
 
 ---
 
 ## About the Author
 
 **Rukayat Alarape**
-Data Analyst | Cloud Engineer Learner | Program Officer, University of Ibadan
+Data Analyst | Cloud Engineer |
 
 - GitHub: [@rukkylatunde2001](https://github.com/rukkylatunde2001)
 - Email: rukkylatunde2001@gmail.com
